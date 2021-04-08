@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Movies.Contracts;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Movies.Server.Controllers
@@ -16,11 +17,19 @@ namespace Movies.Server.Controllers
 			_client = client;
 		}
 
-		// GET api/my/1234
+		// GET api/movies/1
 		[HttpGet("{id}")]
 		public async Task<MovieDataModel> Get(string id)
 		{
 			var result = await _client.Get(id).ConfigureAwait(false);
+			return result;
+		}
+
+		// SET api/movies/top/10
+		[HttpGet("top/{amount}")]
+		public async Task<IEnumerable<MovieDataModel>> GetTop(int amount)
+		{
+			var result = await _client.GetTop(amount).ConfigureAwait(false);
 			return result;
 		}
 

@@ -6,6 +6,7 @@ namespace Movies.Contracts
 	public interface IMovieGrain : IGrainWithStringKey
 	{
 		Task<MovieDataModel> Get();
+		Task<MovieDataModel[]> GetTop(int amount);
 		Task Set(string name);
 	}
 }

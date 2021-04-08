@@ -11,7 +11,8 @@ namespace Movies.Server.Gql.Types
 			Description = "A movie graphtype.";
 
 			Field(x => x.Id, nullable: true).Description("Unique key.");
-			Field(x => x.Title, nullable: true).Description("Title.");
+			Field(x => x.Name, nullable: true).Description("Name.");
+			Field(x => x.Rate, nullable: true).Description("Rating.");
 		}
 	}
 }
