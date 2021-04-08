@@ -19,9 +19,17 @@ namespace Movies.Server.Controllers
 
 		// GET api/movies/1
 		[HttpGet("{id}")]
-		public async Task<MovieDataModel> Get(string id)
+		public async Task<MovieDataModel> Get(long id)
 		{
 			var result = await _client.Get(id).ConfigureAwait(false);
+			return result;
+		}
+
+		// GET api/movies/
+		[HttpGet()]
+		public async Task<MovieDataModel[]> All()
+		{
+			var result = await _client.All().ConfigureAwait(false);
 			return result;
 		}
 
@@ -30,6 +38,14 @@ namespace Movies.Server.Controllers
 		public async Task<IEnumerable<MovieDataModel>> GetTop(int amount)
 		{
 			var result = await _client.GetTop(amount).ConfigureAwait(false);
+			return result;
+		}
+
+		// POST api/movies
+		[HttpPost()]
+		public async Task<MovieDataModel> Create([FromForm] MovieDataModel movie)
+		{
+			var result = await _client.Create(movie).ConfigureAwait(false);
 			return result;
 		}
 
