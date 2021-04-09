@@ -9,6 +9,6 @@
 		public string[] Genres { get; set; }
 		public string Rate { get; set; }
 		public string Length { get; set; }
-		public string img { get; set; }
+		public string Img { get; set; }
 	}
 }

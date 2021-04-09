@@ -64,12 +64,38 @@ namespace Movies.Grains
 			return Task.FromResult(State);
 		}
 
-		public Task Set(string name)
+		/// <summary>
+		/// update the given movie
+		/// </summary>
+		/// <param name="movie">movie with id to update</param>
+		/// <returns>true on success, otherwise false</returns>
+		public Task<bool> Update(long id, MovieDataModel movie)
 		{
-			State = new MovieDataModel { Id = this.GetPrimaryKeyLong(), Name = name };
-			return Task.CompletedTask;
+			State = movie;
+			var movies = getMoviesFromJson();
+
+			var oldMovie = movies.Where(x => x.Id == id).FirstOrDefault();
+
+			if (oldMovie.Id == 0)
+			{
+				// movie not found
+				return Task.FromResult(false);
+			}
+
+			PropertyCopier.CopyProperties(movie, oldMovie);
+			// id is readonly
+			oldMovie.Id = id;
+
+			// persist
+			writeMoviesToJson(movies);
+
+			return Task.FromResult(false);
 		}
 
+		/// <summary>
+		/// load movies from JSON
+		/// </summary>
+		/// <returns>IEnumerable of movies</returns>
 		private IEnumerable<MovieDataModel> getMoviesFromJson()
 		{
 			var moviesJsonString = File.ReadAllText(moviesJson);
@@ -77,6 +103,10 @@ namespace Movies.Grains
 			return JsonConvert.DeserializeObject<MoviesDataModel>(moviesJsonString).movies;
 		}
 
+		/// <summary>
+		/// write movies to the JSON
+		/// </summary>
+		/// <param name="movies">the movies to save</param>
 		private void writeMoviesToJson(IEnumerable<MovieDataModel> movies)
 		{
 			var moviesDto = new MoviesDataModel() { movies = movies };

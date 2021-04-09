@@ -51,7 +51,7 @@ namespace Movies.Server.Controllers
 
 		// POST api/my/1234
 		[HttpPost("{id}")]
-		public async Task Set([FromRoute] string id, [FromForm] string name)
-			=> await _client.Set(id, name).ConfigureAwait(false);
+		public async Task Update(long id, [FromForm] MovieDataModel movie)
+			=> await _client.Update(id, movie).ConfigureAwait(false);
 	}
 }

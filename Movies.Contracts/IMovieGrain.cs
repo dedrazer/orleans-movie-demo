@@ -9,6 +9,6 @@ namespace Movies.Contracts
 		Task<MovieDataModel[]> All();
 		Task<MovieDataModel[]> GetTop(int amount);
 		Task<MovieDataModel> Create(MovieDataModel movie);
-		Task Set(string name);
+		Task<bool> Update(long id, MovieDataModel movie);
 	}
 }

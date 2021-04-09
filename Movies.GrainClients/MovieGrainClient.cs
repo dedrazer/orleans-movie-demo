@@ -32,16 +32,17 @@ namespace Movies.GrainClients
 			var grain = _grainFactory.GetGrain<IMovieGrain>("0");
 			return grain.GetTop(amount);
 		}
+		
 		public Task<MovieDataModel> Create(MovieDataModel movie)
 		{
 			var grain = _grainFactory.GetGrain<IMovieGrain>("0");
 			return grain.Create(movie);
 		}
 
-		public Task Set(string key, string name)
+		public Task<bool> Update(long id, MovieDataModel movie)
 		{
-			var grain = _grainFactory.GetGrain<IMovieGrain>(key);
-			return grain.Set(name);
+			var grain = _grainFactory.GetGrain<IMovieGrain>(movie.Id.ToString());
+			return grain.Update(id, movie);
 		}
 	}
 }
