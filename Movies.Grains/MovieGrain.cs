@@ -82,7 +82,9 @@ namespace Movies.Grains
 				return Task.FromResult(false);
 			}
 
-			PropertyCopier.CopyProperties(movie, oldMovie);
+			// copy properties which aren't null
+			PropertyCopier.CopyProperties(movie, oldMovie, false);
+			
 			// id is readonly
 			oldMovie.Id = id;
 
