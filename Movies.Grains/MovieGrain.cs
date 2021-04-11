@@ -13,6 +13,10 @@ namespace Movies.Grains
 	public class MovieGrain : Grain<MovieDataModel>, IMovieGrain
 	{
 		private const string moviesJson = "../Movies.Grains/movies.json";
+		/// <summary>
+		/// movies saved to memories
+		/// </summary>
+		private static IEnumerable<MovieDataModel> _persistedMovies;
 
 		/// <summary>
 		/// get movie by id
@@ -98,9 +102,14 @@ namespace Movies.Grains
 		/// <returns>IEnumerable of movies</returns>
 		private IEnumerable<MovieDataModel> getMoviesFromJson()
 		{
-			var moviesJsonString = File.ReadAllText(moviesJson);
+			if (_persistedMovies == null)
+			{
+				var moviesJsonString = File.ReadAllText(moviesJson);
 
-			return JsonConvert.DeserializeObject<MoviesDataModel>(moviesJsonString).movies;
+				_persistedMovies = JsonConvert.DeserializeObject<MoviesDataModel>(moviesJsonString).movies;
+			}
+
+			return _persistedMovies;
 		}
 
 		/// <summary>
