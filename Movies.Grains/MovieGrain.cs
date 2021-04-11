@@ -14,7 +14,7 @@ namespace Movies.Grains
 	{
 		private const string moviesJson = "../Movies.Grains/movies.json";
 		/// <summary>
-		/// movies saved to memories
+		/// movies saved to memory
 		/// </summary>
 		private static IEnumerable<MovieDataModel> _persistedMovies;
 
