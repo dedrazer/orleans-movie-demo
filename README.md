@@ -17,7 +17,7 @@ All methods are available inside the Movie Grain (URL: http://localhost:6600/api
 - **Create**
   - Create a new movie that can be retrieved in the movies list
 - **Update**
-  - Update movies data.
+  - Update movies data. Empty fields will not be considered.
 
 ### Unit Tests
 
