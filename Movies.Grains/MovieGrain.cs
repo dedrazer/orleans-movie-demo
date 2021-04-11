@@ -54,14 +54,13 @@ namespace Movies.Grains
 
 			var id = movies.OrderByDescending(x => x.Id).FirstOrDefault().Id+1;
 
-			State = movie;
-			State.Id = id;
+			movie.Id = id;
 
-			movies = movies.Append(State);
+			movies = movies.Append(movie);
 
 			writeMoviesToJson(movies);
 
-			return Task.FromResult(State);
+			return Task.FromResult(movie);
 		}
 
 		/// <summary>
@@ -71,12 +70,11 @@ namespace Movies.Grains
 		/// <returns>true on success, otherwise false</returns>
 		public Task<bool> Update(long id, MovieDataModel movie)
 		{
-			State = movie;
 			var movies = getMoviesFromJson();
 
 			var oldMovie = movies.Where(x => x.Id == id).FirstOrDefault();
 
-			if (oldMovie.Id == 0)
+			if (oldMovie == null)
 			{
 				// movie not found
 				return Task.FromResult(false);
@@ -91,7 +89,7 @@ namespace Movies.Grains
 			// persist
 			writeMoviesToJson(movies);
 
-			return Task.FromResult(false);
+			return Task.FromResult(true);
 		}
 
 		/// <summary>
